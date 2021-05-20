@@ -7,7 +7,7 @@ const destinationReducer = (state = initialState, action) => {
         case "GET_DESTINATIONS":
             return {
                 ...state,
-                destinations: action.destinations
+                destinations: action.payload
             }
         default:
             return state

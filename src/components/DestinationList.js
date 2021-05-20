@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import DestinationCard from "./DestinationCard";
 
 class DestinationList extends React.Component {
 
@@ -17,7 +18,7 @@ class DestinationList extends React.Component {
     render() {
         return (
             <div>
-                {console.log(this.props.destinations)}
+                {this.props.destinations.length > 0 && this.props.destinations.map(destination => <DestinationCard key={destination.id} destination={destination} />)}
             </div>
         )
     }
@@ -32,7 +33,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        get_destination: (destinations) => dispatch({ type: "GET_DESTINATIONS", destinations })
+        get_destination: (destinations) => dispatch({ type: "GET_DESTINATIONS", payload: destinations })
     }
 }
 

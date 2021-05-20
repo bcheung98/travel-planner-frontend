@@ -1,8 +1,10 @@
 import React from "react";
 
-const DestinationCard = () => {
+const DestinationCard = (props) => {
     return (
-        <div></div>
+        <div>
+            {props.destination.name}
+        </div>
     )
 }
 
