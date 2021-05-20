@@ -30,7 +30,7 @@ class App extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <Router>
                 <Nav logged_in={this.state.logged_in} />
                 <Switch>
@@ -38,18 +38,22 @@ class App extends React.Component {
                     <Route exact path="/" component={MainContainer} />
 
                     <Route path="/login" component={() => (
-                            !this.state.logged_in ? <Login handleLogin={this.handleLogin} /> : <Redirect to="/" />
-                        )} />
+                        !this.state.logged_in ? <Login handleLogin={this.handleLogin} /> : <Redirect to="/" />
+                    )} />
 
                     <Route path="/signup" component={() => (
-                            !this.state.logged_in ? <Signup handleLogin={this.handleLogin} /> : <Redirect to="/" />
-                        )} />
-                    
+                        !this.state.logged_in ? <Signup handleLogin={this.handleLogin} /> : <Redirect to="/" />
+                    )} />
+
                     <Route path="/logout" component={() => {
-                            localStorage.clear()
-                            this.setState({ logged_in: false, token: null })
-                            return <Redirect to="/" />
-                        }} />
+                        localStorage.clear()
+                        this.setState({ logged_in: false, token: null })
+                        return <Redirect to="/" />
+                    }} />
+
+                    <Route path="/browse" component={() => (
+                        this.state.logged_in ? <MainContainer /> : <Redirect to="/login" />
+                    )} />
 
                 </Switch>
             </Router>

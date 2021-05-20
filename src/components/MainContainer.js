@@ -1,16 +1,12 @@
-import React from "react";
-import {withRouter} from "react-router";
+import { withRouter } from "react-router"
+import DestinationList from "./DestinationList";
 
-class MainContainer extends React.Component {
-
-    render() {
-        return (
-            <div>
-                Hello
-            </div>
-        )
-    }
-
+const MainContainer = () => {
+    return (
+        <div>
+            <DestinationList />
+        </div>
+    )
 }
 
 export default withRouter(MainContainer);

@@ -2,14 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { compose, createStore } from "redux";
+
+import store from "./store";
 import { Provider } from "react-redux";
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 ReactDOM.render(
-
-    <App />
-    ,
+    <Provider store={store}>
+        <App />
+    </Provider>,
     document.getElementById("root")
 );

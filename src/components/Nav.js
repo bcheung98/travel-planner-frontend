@@ -42,8 +42,6 @@ const Nav = ({ logged_in, history }) => {
                                 <Typography variant="subtitle2">
                                     Logged in as: {localStorage.getItem("username")}
                                 </Typography>
-                                <Button className={classes.buttons} variant="contained" color="secondary" onClick={() => history.push("/flights")}>Search Flights</Button>
-                                <Button className={classes.buttons} variant="contained" color="secondary" onClick={() => history.push("/bookings")}>My Bookings</Button>
                                 <Button className={classes.buttons} variant="contained" color="secondary" onClick={() => confirmLogout() && history.push("/logout")}>Logout</Button>
                             </>
                         )
