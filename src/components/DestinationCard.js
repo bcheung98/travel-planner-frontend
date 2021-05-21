@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { connect } from "react-redux";
+import { addDestination } from "../redux/actions/addDestination";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,7 +52,7 @@ const DestinationCard = (props) => {
             <Typography variant="subtitle1">
                 {location}, {country}
             </Typography>
-            <Button onClick={() => props.add_destination(props.destination)}>
+            <Button onClick={() => props.add_destination(props.destination)} className={classes.buttons}>
                 +
             </Button>
         </Paper>
@@ -60,7 +61,7 @@ const DestinationCard = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        add_destination: (destination) => dispatch({ type: "ADD_DESTINATION", payload: destination })
+        add_destination: (destination) => dispatch(addDestination(destination))
     }
 }
 

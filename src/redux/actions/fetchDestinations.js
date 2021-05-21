@@ -1,6 +1,6 @@
 export const fetchDestinations = () => {
     return (dispatch) => {
-        dispatch({ type: "START_ADDING_DESTINATIONS_REQUEST" });
+        dispatch({ type: "START_GETTING_DESTINATIONS_REQUEST" });
         fetch("http://localhost:3000/destinations", {
             method: "GET",
             headers: {
