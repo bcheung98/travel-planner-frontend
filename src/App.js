@@ -10,6 +10,7 @@ import Nav from "./components/Nav";
 import MainContainer from "./components/MainContainer";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Profile from "./components/Profile";
 
 class App extends React.Component {
 
@@ -55,6 +56,10 @@ class App extends React.Component {
 
                     <Route path="/browse" component={() => (
                         this.state.logged_in ? <MainContainer /> : <Redirect to="/login" />
+                    )} />
+
+                    <Route path="/profile" component={() => (
+                        this.state.logged_in ? <Profile /> : <Redirect to="/login" />
                     )} />
 
                 </Switch>

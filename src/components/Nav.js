@@ -42,6 +42,7 @@ const Nav = ({ logged_in, history }) => {
                                 <Typography variant="subtitle2">
                                     Logged in as: {localStorage.getItem("username")}
                                 </Typography>
+                                <Button className={classes.buttons} variant="contained" color="secondary" onClick={() => history.push("/profile")}>Profile</Button>
                                 <Button className={classes.buttons} variant="contained" color="secondary" onClick={() => confirmLogout() && history.push("/logout")}>Logout</Button>
                             </>
                         )
