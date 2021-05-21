@@ -24,7 +24,6 @@ const destinationReducer = (state = initialState, action) => {
                 requesting: true
             }
         case "GET_USER_DESTINATIONS":
-            console.log(action.destinations)
             return {
                 ...state,
                 destinations: action.destinations,
@@ -38,6 +37,19 @@ const destinationReducer = (state = initialState, action) => {
             }
         case "ADD_DESTINATION":
             return state
+        case "START_DELETING_DESTINATIONS_REQUEST":
+            return {
+                ...state,
+                destinations: [...state.destinations],
+                requesting: true
+            }
+        case "DELETE_DESTINATION":
+            let newState = state.destinations.filter(d => d.id !== action.destination.id)
+            return {
+                ...state,
+                destinations: newState,
+                requesting: false
+            }
         default:
             return state
     }

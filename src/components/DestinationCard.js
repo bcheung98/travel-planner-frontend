@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { connect } from "react-redux";
 import { addDestination } from "../redux/actions/addDestination";
+import { deleteDestination } from "../redux/actions/deleteDestination";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,16 +53,24 @@ const DestinationCard = (props) => {
             <Typography variant="subtitle1">
                 {location}, {country}
             </Typography>
-            <Button onClick={() => props.add_destination(props.destination)} className={classes.buttons}>
-                +
-            </Button>
+            {
+                window.location.pathname === "/browse" ?
+                    <Button onClick={() => props.add_destination(props.destination)} className={classes.buttons}>
+                        +
+                    </Button>
+                    :
+                    <Button onClick={() => props.delete_destination(props.destination)} className={classes.buttons}>
+                        -
+                    </Button>
+            }
         </Paper>
     )
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        add_destination: (destination) => dispatch(addDestination(destination))
+        add_destination: (destination) => dispatch(addDestination(destination)),
+        delete_destination: (destination) => dispatch(deleteDestination(destination))
     }
 }
 

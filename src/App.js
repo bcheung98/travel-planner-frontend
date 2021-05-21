@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import './App.css';
 import Nav from "./components/Nav";
+import Home from "./components/Home";
 import MainContainer from "./components/MainContainer";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
@@ -36,9 +37,7 @@ class App extends React.Component {
                 <Nav logged_in={this.state.logged_in} />
                 <Switch>
 
-                    <Route exact path="/" component={() => (
-                        this.state.logged_in ? <MainContainer /> : <Redirect to="/login" />
-                    )} />
+                    <Route exact path="/" component={Home} />
 
                     <Route path="/login" component={() => (
                         !this.state.logged_in ? <Login handleLogin={this.handleLogin} /> : <Redirect to="/" />
