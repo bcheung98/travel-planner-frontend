@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,22 +45,23 @@ const DestinationCard = (props) => {
     let { name, location, country } = props.destination
     return (
         <Paper className={classes.paper}>
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm container>
-                    <Grid item xs container direction="column" spacing={2}>
-                        <Grid item xs>
-                            <Typography variant="h4">
-                                {name}
-                            </Typography>
-                            <Typography variant="subtitle1">
-                                {location}, {country}
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Grid>
+            <Typography variant="h4">
+                {name}
+            </Typography>
+            <Typography variant="subtitle1">
+                {location}, {country}
+            </Typography>
+            <Button onClick={() => props.add_destination(props.destination)}>
+                +
+            </Button>
         </Paper>
     )
 }
 
-export default DestinationCard;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        add_destination: (destination) => dispatch({ type: "ADD_DESTINATION", payload: destination })
+    }
+}
+
+export default connect(null, mapDispatchToProps)(DestinationCard);

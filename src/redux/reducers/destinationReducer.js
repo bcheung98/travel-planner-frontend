@@ -1,14 +1,25 @@
 const initialState = {
-    destinations: []
+    destinations: [],
+    requesting: false
 }
 
 const destinationReducer = (state = initialState, action) => {
     switch (action.type) {
+        case "START_ADDING_DESTINATIONS_REQUEST":
+            return {
+                ...state,
+                destinations: [...state.destinations],
+                requesting: true
+            }
         case "GET_DESTINATIONS":
             return {
                 ...state,
-                destinations: action.payload
+                destinations: action.destinations,
+                requesting: false
             }
+        case "ADD_DESTINATION":
+            console.log(action.payload)
+            return state
         default:
             return state
     }

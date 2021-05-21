@@ -35,7 +35,9 @@ class App extends React.Component {
                 <Nav logged_in={this.state.logged_in} />
                 <Switch>
 
-                    <Route exact path="/" component={MainContainer} />
+                    <Route exact path="/" component={() => (
+                        this.state.logged_in ? <MainContainer /> : <Redirect to="/login" />
+                    )} />
 
                     <Route path="/login" component={() => (
                         !this.state.logged_in ? <Login handleLogin={this.handleLogin} /> : <Redirect to="/" />

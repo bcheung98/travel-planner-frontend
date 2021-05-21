@@ -1,29 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router"
 import { connect } from "react-redux";
+import { fetchDestinations } from "../redux/actions/fetchDestinations";
 import DestinationList from "./DestinationList";
 
-class MainContainer extends React.Component {
+const MainContainer = (props) => {
 
-    componentDidMount() {
-        fetch("http://localhost:3000/destinations", {
-            method: "GET",
-            headers: {
-                "token": localStorage.getItem("token")
-            }
-        })
-            .then(res => res.json())
-            .then(destinations => this.props.get_destination(destinations));
-    }
+    let { destinations, fetchDestinations } = props
 
-    render() {
-        return (
-            <div>
-                <DestinationList destinations={this.props.destinations} />
-            </div>
-        )
-    }
+    useEffect(() => {
+        fetchDestinations();
+    }, [])
 
+    return (
+        <div>
+            <DestinationList destinations={destinations} />
+        </div>
+    )
 }
 
 const mapStateToProps = (state) => {
@@ -34,7 +27,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        get_destination: (destinations) => dispatch({ type: "GET_DESTINATIONS", payload: destinations })
+        fetchDestinations: () => dispatch(fetchDestinations())
     }
 }
 
