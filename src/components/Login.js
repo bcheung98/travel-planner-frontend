@@ -3,6 +3,7 @@ import { withRouter } from "react-router";
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import "../form.css";
 
 class Login extends React.Component {
 
@@ -42,9 +43,9 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div className="login-page">
-                <form onSubmit={this.handleSubmit} className="login-container">
-                    <Typography variant="h3">Login to YPedia</Typography>
+            <div>
+                <form onSubmit={this.handleSubmit} className="form-container">
+                    <Typography variant="h3">Login</Typography>
                     <div className="form-input-box">
                         <TextField type="text" name="username" className="form-input" placeholder="Username" onChange={this.handleInputChange} required />
                     </div>

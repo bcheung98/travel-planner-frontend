@@ -3,6 +3,7 @@ import { withRouter } from "react-router";
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import "../form.css";
 
 class Signup extends React.Component {
 
@@ -46,8 +47,8 @@ class Signup extends React.Component {
 
     render() {
         return (
-            <div className="signup-page">
-                <form onSubmit={this.handleSubmit} className="signup-container">
+            <div>
+                <form onSubmit={this.handleSubmit} className="form-container">
                     <Typography variant="h4">Create an account</Typography>
                     <div className="form-input-box">
                         <TextField type="text" name="username" className="form-input" placeholder="Username" onChange={this.handleInputChange} required />
