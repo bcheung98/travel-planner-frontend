@@ -18,7 +18,7 @@ const Profile = (props) => {
             <Typography>
                 My Profile
             </Typography>
-            <DestinationList destinations={destinations} />
+            <DestinationList destinations={destinations.destinations} />
         </div>
     )
 }
