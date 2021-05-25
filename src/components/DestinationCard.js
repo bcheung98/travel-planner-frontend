@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: 20,
     },
     heading: {
+        fontWeight: "bold",
         fontSize: theme.typography.pxToRem(15),
     },
     secondaryHeading: {
@@ -73,7 +74,6 @@ const DestinationCard = (props) => {
                 </AccordionDetails>
                 <Divider />
                 <AccordionActions>
-                    <Button size="small">Cancel</Button>
                     {
                         window.location.pathname === "/browse" ?
                             <Button onClick={() => props.add_destination(props.destination)} size="small" color="primary">Add Destination</Button>
