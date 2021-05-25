@@ -4,7 +4,7 @@ import DestinationCard from "./DestinationCard";
 const DestinationList = (props) => {
     return (
         <div>
-            {props.destinations.destinations.map(d => <DestinationCard key={d.id} destination={d} />)}
+            {props.destinations.map(d => <DestinationCard key={d.id} destination={d} />)}
         </div>
     )
 }
