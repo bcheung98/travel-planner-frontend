@@ -15,8 +15,8 @@ const Profile = (props) => {
 
     return (
         <div>
-            <Typography>
-                My Profile
+            <Typography variant="h3" style={{textAlign: "center", margin: "20px"}}>
+                My Destinations
             </Typography>
             <DestinationList destinations={destinations.destinations} />
         </div>
