@@ -17,7 +17,6 @@ const useStyles = makeStyles({
         margin: "auto",
         marginBottom: 20,
         maxWidth: 500,
-        border: "2px solid gray"
     },
     media: {
         height: 650
@@ -28,7 +27,7 @@ const DestinationCard = (props) => {
     const classes = useStyles();
     let { name, location, country, image, description } = props.destination;
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} variant="outlined">
             <CardHeader
                 title={
                     <Typography gutterBottom variant="h5" component="h2">{name}</Typography>
