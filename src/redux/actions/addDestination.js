@@ -1,6 +1,5 @@
 export const addDestination = (destination) => {
     return (dispatch) => {
-        console.log(destination)
         dispatch({ type: "START_ADDING_DESTINATIONS_REQUEST" });
         fetch("http://localhost:3000/user_destinations", {
             method: "POST",
