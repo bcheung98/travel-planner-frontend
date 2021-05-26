@@ -5,7 +5,7 @@ import { fetchDestinations } from "../redux/actions/fetchDestinations";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import DestinationList from "./DestinationList";
+import DestinationCard from "./DestinationCard";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -57,7 +57,7 @@ const MainContainer = (props) => {
                     renderInput={(params) => <TextField {...params} label={"Country"} variant="outlined" />}
                 />
             </div>
-            <DestinationList destinations={filterDestinations(countryFilter, destinations.destinations)} />
+            {filterDestinations(countryFilter, destinations.destinations).map(d => <DestinationCard key={d.id} destination={d}/>)}
         </div>
     )
 }

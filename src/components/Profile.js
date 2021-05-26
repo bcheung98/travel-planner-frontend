@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { showMyDestinations } from "../redux/actions/showMyDestinations";
-import DestinationList from "./DestinationList";
+import DestinationCard from "./DestinationCard";
 
 const Profile = (props) => {
 
@@ -18,7 +18,7 @@ const Profile = (props) => {
             <Typography variant="h3" style={{textAlign: "center", margin: "20px"}}>
                 My Destinations
             </Typography>
-            <DestinationList destinations={destinations.destinations} />
+            {destinations.destinations.map(d => <DestinationCard key={d.id} destination={d}/>)}
         </div>
     )
 }
