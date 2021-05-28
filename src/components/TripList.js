@@ -9,6 +9,7 @@ import TripCard from "./TripCard";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,7 +32,7 @@ const TripList = (props) => {
     return (
         <div className={classes.root}>
             {trips.trips.map(trip => <TripCard key={trip.id} tripId={trip.id} name={trip.name} destinations={trip.destinations} />)}
-            <Button onClick={() => createTrip()} variant="contained" size="small" color="primary">
+            <Button onClick={() => createTrip()} endIcon={<AddIcon />} variant="contained" size="small" color="primary">
                 New Trip
             </Button>
         </div>

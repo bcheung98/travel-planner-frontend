@@ -5,20 +5,18 @@ import { deleteTrip } from "../redux/actions/deleteTrip";
 import DestinationCard from "./DestinationCard";
 
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionActions from '@material-ui/core/AccordionActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Chip from '@material-ui/core/Chip';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: 'none',
         '&:hover': {
             textDecoration: 'underline',
+            cursor: "pointer"
         },
     },
 }));
@@ -95,6 +94,7 @@ const TripCard = (props) => {
                                     return (
                                         <ListItem key={destination.name}>
                                             <ListItemText
+                                                className={classes.link}
                                                 primary={destination.name}
                                                 secondary={`${destination.location}, ${destination.country}`}
                                                 onClick={() => handleClickOpen(destination)}
@@ -118,8 +118,10 @@ const TripCard = (props) => {
                     <AccordionActions>
                         <Button
                             onClick={() => confirmDelete() && props.deleteTrip(props.tripId)}
+                            variant="contained"
                             size="small"
-                            color="secondary">
+                            color="secondary"
+                            startIcon={<DeleteIcon />}>
                             Delete Trip
                         </Button>
                     </AccordionActions>
