@@ -1,5 +1,5 @@
 const initialState = {
-    trips: [],
+    trips: {},
     requesting: false
 }
 
@@ -19,13 +19,12 @@ const tripReducer = (state = initialState, action) => {
         case "START_GETTING_TRIPS_REQUEST":
             return {
                 ...state,
-                trips: [...state.trips],
                 requesting: true
             }
         case "GET_TRIPS":
             return {
                 ...state,
-                trips: action.trips.trips,
+                trips: action.trips,
                 requesting: false
             }
         default:

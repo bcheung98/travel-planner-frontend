@@ -22,7 +22,7 @@ const TripList = (props) => {
             <Button onClick={() => createTrip()} variant="contained" size="small" color="primary">
                 New Trip
             </Button>
-            {trips.trips.map((trip, index) => <TripCard key={index} index={index} trip={trip} />)}
+            {Object.entries(trips.trips).map(([name, trips]) => <TripCard key={name} name={name} trips={trips} />)}
         </div>
     )
 }

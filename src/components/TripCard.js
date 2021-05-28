@@ -61,7 +61,7 @@ const TripCard = (props) => {
                         id="panel1c-header"
                     >
                         <div className={classes.column}>
-                            <Typography className={classes.heading}>Trip {props.index + 1}</Typography>
+                            <Typography className={classes.heading}>{props.name}</Typography>
                         </div>
                         <div className={classes.column}>
                             <Typography className={classes.secondaryHeading}></Typography>
@@ -69,16 +69,24 @@ const TripCard = (props) => {
                     </AccordionSummary>
                     <AccordionDetails className={classes.details}>
                         <List>
-                            {props.trip.map((trip, index) => {
-                                return (
-                                    <ListItem key={index}>
-                                        <ListItemText
-                                            primary={trip.name}
-                                            secondary={`${trip.location}, ${trip.country}`}
-                                        />
-                                    </ListItem>
-                                )
-                            })}
+                            {props.trips.length > 0 ?
+                                props.trips.map(trip => {
+                                    return (
+                                        <ListItem key={props.name}>
+                                            <ListItemText
+                                                primary={trip.name}
+                                                secondary={`${trip.location}, ${trip.country}`}
+                                            />
+                                        </ListItem>
+                                    )
+                                })
+                                :
+                                <ListItem>
+                                    <ListItemText 
+                                        primary="No destinations for this trip!"
+                                    />
+                                </ListItem>
+                            }
                         </List>
                     </AccordionDetails>
                     <Divider />

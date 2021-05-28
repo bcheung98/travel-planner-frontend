@@ -1,4 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+import { connect } from "react-redux";
+import { addDestination } from "../redux/actions/addDestination";
+import { deleteDestination } from "../redux/actions/deleteDestination";
+import { fetchTrips } from "../redux/actions/fetchTrips";
+
+import SelectTrip from "./SelectTrip";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -8,9 +15,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { connect } from "react-redux";
-import { addDestination } from "../redux/actions/addDestination";
-import { deleteDestination } from "../redux/actions/deleteDestination";
 
 const useStyles = makeStyles({
     root: {
@@ -26,6 +30,24 @@ const useStyles = makeStyles({
 const DestinationCard = (props) => {
     const classes = useStyles();
     let { name, location, country, image, description } = props.destination;
+
+    const [open, setOpen] = React.useState(false);
+    const [selectedValue, setSelectedValue] = React.useState("");
+
+    useEffect(() => {
+        props.fetchTrips();
+    }, [])
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (value) => {
+        setOpen(false);
+        setSelectedValue(value);
+        console.log(value);
+    };
+
     return (
         <Card className={classes.root} variant="outlined">
             <CardHeader
@@ -47,7 +69,10 @@ const DestinationCard = (props) => {
             <CardActions>
                 {
                     window.location.pathname === "/browse" ?
-                        <Button onClick={() => props.add_destination(props.destination)} variant="contained" size="small" color="primary">Add Destination</Button>
+                        <>
+                            <Button onClick={handleClickOpen} variant="contained" size="small" color="primary">Add Destination</Button>
+                            <SelectTrip open={open} onClose={handleClose} />
+                        </>
                         :
                         <Button onClick={() => props.delete_destination(props.destination)} variant="contained" size="small" color="secondary">Remove Destination</Button>
                 }
@@ -56,11 +81,18 @@ const DestinationCard = (props) => {
     )
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
     return {
-        add_destination: (destination) => dispatch(addDestination(destination)),
-        delete_destination: (destination) => dispatch(deleteDestination(destination))
+        trips: state.trip
     }
 }
 
-export default connect(null, mapDispatchToProps)(DestinationCard);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        add_destination: (destination) => dispatch(addDestination(destination)),
+        delete_destination: (destination) => dispatch(deleteDestination(destination)),
+        fetchTrips: () => dispatch(fetchTrips())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DestinationCard);
