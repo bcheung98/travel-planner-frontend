@@ -7,9 +7,21 @@ import { fetchTrips } from "../redux/actions/fetchTrips";
 
 import TripCard from "./TripCard";
 
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+        padding: theme.spacing(2),
+        margin: 'auto',
+        maxWidth: 750,
+        display: "grid",
+        // gridTemplateColumns: "auto auto auto"
+    },
+}));
+
 const TripList = (props) => {
+    const classes = useStyles();
 
     useEffect(() => {
         fetchTrips();
@@ -17,12 +29,11 @@ const TripList = (props) => {
     let { trips, createTrip, fetchTrips } = props;
 
     return (
-        <div>
-            <br />
+        <div className={classes.root}>
+            {Object.entries(trips.trips).map(([name, trips]) => <TripCard key={name} name={name} trips={trips} />)}
             <Button onClick={() => createTrip()} variant="contained" size="small" color="primary">
                 New Trip
             </Button>
-            {Object.entries(trips.trips).map(([name, trips]) => <TripCard key={name} name={name} trips={trips} />)}
         </div>
     )
 }
