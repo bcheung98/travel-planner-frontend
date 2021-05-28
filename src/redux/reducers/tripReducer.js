@@ -1,5 +1,5 @@
 const initialState = {
-    trips: {},
+    trips: [],
     requesting: false
 }
 
@@ -11,13 +11,9 @@ const tripReducer = (state = initialState, action) => {
                 requesting: true
             }
         case "CREATE_NEW_TRIP":
-            let name = action.trip.trip.name;
             return {
                 ...state,
-                trips: {
-                    ...state.trips,
-                    [name]: action.trip
-                },
+                trips: [...state.trips, action.trip.trip],
                 requesting: false
             }
         case "START_GETTING_TRIPS_REQUEST":
@@ -28,7 +24,7 @@ const tripReducer = (state = initialState, action) => {
         case "GET_TRIPS":
             return {
                 ...state,
-                trips: action.trips,
+                trips: action.trips.trips,
                 requesting: false
             }
         default:

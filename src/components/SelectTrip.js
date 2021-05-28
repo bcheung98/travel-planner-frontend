@@ -41,12 +41,11 @@ const SelectTrip = (props) => {
         <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
             <DialogTitle id="simple-dialog-title">Select Trip</DialogTitle>
             <List>
-                {Object.entries(props.trips.trips).map(([name]) => (
-                    <ListItem button onClick={() => handleListItemClick(name)} key={name}>
-                        <ListItemText primary={name} />
+                {props.trips.trips.map(trip => (
+                    <ListItem button onClick={() => handleListItemClick(trip.name)} key={trip.id}>
+                        <ListItemText primary={trip.name} />
                     </ListItem>
                 ))}
-
                 <ListItem autoFocus button onClick={() => handleListItemClick('newTrip')}>
                     <ListItemAvatar>
                         <Avatar>

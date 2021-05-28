@@ -69,20 +69,20 @@ const TripCard = (props) => {
                     </AccordionSummary>
                     <AccordionDetails className={classes.details}>
                         <List>
-                            {props.trips.length > 0 ?
-                                props.trips.map(trip => {
+                            {props.destinations.length > 0 ?
+                                props.destinations.map(destination => {
                                     return (
-                                        <ListItem key={props.name}>
+                                        <ListItem key={destination.name}>
                                             <ListItemText
-                                                primary={trip.name}
-                                                secondary={`${trip.location}, ${trip.country}`}
+                                                primary={destination.name}
+                                                secondary={`${destination.location}, ${destination.country}`}
                                             />
                                         </ListItem>
                                     )
                                 })
                                 :
                                 <ListItem>
-                                    <ListItemText 
+                                    <ListItemText
                                         primary="No destinations for this trip!"
                                     />
                                 </ListItem>
@@ -91,7 +91,9 @@ const TripCard = (props) => {
                     </AccordionDetails>
                     <Divider />
                     <AccordionActions>
-                        {/* Buttons go here! */}
+                        <Button size="small" color="primary">
+                            Edit Trip
+                        </Button>
                     </AccordionActions>
                 </Accordion>
             </div>
