@@ -18,18 +18,6 @@ const destinationReducer = (state = initialState, action) => {
                 destinations: action.destinations,
                 requesting: false
             }
-        case "START_GETTING_USER_DESTINATIONS_REQUEST":
-            return {
-                ...state,
-                destinations: [...state.destinations],
-                requesting: true
-            }
-        case "GET_USER_DESTINATIONS":
-            return {
-                ...state,
-                destinations: action.destinations,
-                requesting: false
-            }
         case "START_ADDING_DESTINATIONS_REQUEST":
             return {
                 ...state,

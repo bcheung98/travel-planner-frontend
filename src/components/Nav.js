@@ -44,7 +44,6 @@ const Nav = ({ logged_in, history }) => {
                                 </Typography>
                                 <Button className={classes.buttons} variant="contained" color="secondary" onClick={() => history.push("/browse")}>Browse Destinations</Button>
                                 <Button className={classes.buttons} variant="contained" color="secondary" onClick={() => history.push("/my-trips")}>My Trips</Button>
-                                <Button className={classes.buttons} variant="contained" color="secondary" onClick={() => history.push("/profile")}>My Destinations</Button>
                                 <Button className={classes.buttons} variant="contained" color="secondary" onClick={() => confirmLogout() && history.push("/logout")}>Logout</Button>
                             </>
                         )
