@@ -11,9 +11,13 @@ const tripReducer = (state = initialState, action) => {
                 requesting: true
             }
         case "CREATE_NEW_TRIP":
+            let name = action.trip.trip.name;
             return {
                 ...state,
-                trips: action.trips,
+                trips: {
+                    ...state.trips,
+                    [name]: action.trip
+                },
                 requesting: false
             }
         case "START_GETTING_TRIPS_REQUEST":
