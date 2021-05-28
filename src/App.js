@@ -8,9 +8,10 @@ import {
 import './App.css';
 import Nav from "./components/Nav";
 import Home from "./components/Home";
-import MainContainer from "./components/MainContainer";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import DestinationList from "./components/DestinationList";
+import TripList from "./components/TripList";
 import Profile from "./components/Profile";
 
 class App extends React.Component {
@@ -54,7 +55,11 @@ class App extends React.Component {
                     }} />
 
                     <Route path="/browse" component={() => (
-                        this.state.logged_in ? <MainContainer /> : <Redirect to="/login" />
+                        this.state.logged_in ? <DestinationList /> : <Redirect to="/login" />
+                    )} />
+
+                    <Route path="/my-trips" component={() => (
+                        this.state.logged_in ? <TripList /> : <Redirect to="/login" />
                     )} />
 
                     <Route path="/profile" component={() => (

@@ -1,7 +1,7 @@
 export const addDestination = (destination) => {
     return (dispatch) => {
         dispatch({ type: "START_ADDING_DESTINATIONS_REQUEST" });
-        fetch("http://localhost:3000/user_destinations", {
+        fetch("http://localhost:3000/trip_destinations", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

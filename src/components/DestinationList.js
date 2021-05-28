@@ -25,7 +25,7 @@ const filterDestinations = (countryFilter, destinations) => {
     return filteredDestinations;
 }
 
-const MainContainer = (props) => {
+const DestinationList = (props) => {
 
     useEffect(() => {
         fetchDestinations();
@@ -74,4 +74,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MainContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(DestinationList));
