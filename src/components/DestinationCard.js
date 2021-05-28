@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { addDestination } from "../redux/actions/addDestination";
 import { deleteDestination } from "../redux/actions/deleteDestination";
 import { fetchTrips } from "../redux/actions/fetchTrips";
-
+import { createTrip } from "../redux/actions/createTrip";
 import SelectTrip from "./SelectTrip";
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -32,7 +32,6 @@ const DestinationCard = (props) => {
     let { name, location, country, image, description } = props.destination;
 
     const [open, setOpen] = React.useState(false);
-    const [selectedValue, setSelectedValue] = React.useState("");
 
     useEffect(() => {
         props.fetchTrips();
@@ -44,8 +43,12 @@ const DestinationCard = (props) => {
 
     const handleClose = (value) => {
         setOpen(false);
-        setSelectedValue(value);
-        console.log(value);
+        if (value === "newTrip") {
+            props.createTrip();
+        }
+        else {
+            console.log(value);
+        }
     };
 
     return (
@@ -91,6 +94,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         add_destination: (destination) => dispatch(addDestination(destination)),
         delete_destination: (destination) => dispatch(deleteDestination(destination)),
+        createTrip: () => dispatch(createTrip()),
         fetchTrips: () => dispatch(fetchTrips())
     }
 }
