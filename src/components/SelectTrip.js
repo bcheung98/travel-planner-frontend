@@ -42,7 +42,7 @@ const SelectTrip = (props) => {
             <DialogTitle id="simple-dialog-title">Select Trip</DialogTitle>
             <List>
                 {props.trips.trips.map(trip => (
-                    <ListItem button onClick={() => handleListItemClick(trip.name)} key={trip.id}>
+                    <ListItem button onClick={() => handleListItemClick(trip.id)} key={trip.id}>
                         <ListItemText primary={trip.name} />
                     </ListItem>
                 ))}

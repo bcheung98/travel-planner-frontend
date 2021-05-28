@@ -69,7 +69,7 @@ const TripCard = (props) => {
                     </AccordionSummary>
                     <AccordionDetails className={classes.details}>
                         <List>
-                            {props.destinations.length > 0 ?
+                            {props.destinations !== undefined && props.destinations.length > 0 ?
                                 props.destinations.map(destination => {
                                     return (
                                         <ListItem key={destination.name}>

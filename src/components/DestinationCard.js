@@ -47,7 +47,7 @@ const DestinationCard = (props) => {
             props.createTrip();
         }
         else {
-            console.log(value);
+            props.addDestination(value, props.destination);
         }
     };
 
@@ -77,7 +77,7 @@ const DestinationCard = (props) => {
                             <SelectTrip open={open} onClose={handleClose} />
                         </>
                         :
-                        <Button onClick={() => props.delete_destination(props.destination)} variant="contained" size="small" color="secondary">Remove Destination</Button>
+                        <Button onClick={() => props.deleteDestination(props.destination)} variant="contained" size="small" color="secondary">Remove Destination</Button>
                 }
             </CardActions>
         </Card>
@@ -92,8 +92,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        add_destination: (destination) => dispatch(addDestination(destination)),
-        delete_destination: (destination) => dispatch(deleteDestination(destination)),
+        addDestination: (trip, destination) => dispatch(addDestination(trip, destination)),
+        deleteDestination: (destination) => dispatch(deleteDestination(destination)),
         createTrip: () => dispatch(createTrip()),
         fetchTrips: () => dispatch(fetchTrips())
     }
