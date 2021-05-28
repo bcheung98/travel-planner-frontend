@@ -1,5 +1,7 @@
 import React from "react";
 
+import { connect } from "react-redux";
+import { deleteTrip } from "../redux/actions/deleteTrip";
 import DestinationCard from "./DestinationCard";
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -52,6 +54,8 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
+
+const confirmDelete = () => window.confirm("Are you sure you want to delete this trip and all of its destinations?");
 
 const TripCard = (props) => {
     const classes = useStyles();
@@ -112,7 +116,12 @@ const TripCard = (props) => {
                     </AccordionDetails>
                     <Divider />
                     <AccordionActions>
-                        {/* Buttons go here! */}
+                        <Button
+                            onClick={() => confirmDelete() && props.deleteTrip(props.tripId)}
+                            size="small"
+                            color="secondary">
+                            Delete Trip
+                        </Button>
                     </AccordionActions>
                 </Accordion>
             </div>
@@ -120,4 +129,10 @@ const TripCard = (props) => {
     )
 }
 
-export default TripCard;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deleteTrip: (tripId) => dispatch(deleteTrip(tripId))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(TripCard);

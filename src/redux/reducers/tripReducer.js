@@ -11,7 +11,6 @@ const tripReducer = (state = initialState, action) => {
                 requesting: true
             }
         case "CREATE_NEW_TRIP":
-            console.log(action.trip.trip)
             return {
                 ...state,
                 trips: [...state.trips, action.trip.trip],
@@ -40,6 +39,18 @@ const tripReducer = (state = initialState, action) => {
             prevStateTrips[index].destinations = newDestinations;
             return {
                 ...state,
+                requesting: false
+            }
+        case "START_DELETING_TRIP_REQUEST":
+            return {
+                ...state,
+                requesting: true
+            }
+        case "DELETE_TRIP":
+            let newTrips = state.trips.filter(trip => trip.id !== action.tripId);
+            return {
+                ...state,
+                trips: newTrips,
                 requesting: false
             }
         default:
