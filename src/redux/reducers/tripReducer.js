@@ -28,6 +28,20 @@ const tripReducer = (state = initialState, action) => {
                 trips: action.trips.trips,
                 requesting: false
             }
+        case "START_DELETING_DESTINATIONS_REQUEST":
+            return {
+                ...state,
+                requesting: true
+            }
+        case "DELETE_DESTINATION":
+            let prevStateTrips = [...state.trips]
+            let index = prevStateTrips.findIndex(trip => trip.id === action.trip.tripId);
+            let newDestinations = prevStateTrips.filter(trip => trip.id === action.trip.tripId)[0].destinations.filter(destination => destination.id !== action.destination.id);
+            prevStateTrips[index].destinations = newDestinations;
+            return {
+                ...state,
+                requesting: false
+            }
         default:
             return state
     }

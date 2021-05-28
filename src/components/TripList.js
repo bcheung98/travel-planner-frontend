@@ -30,7 +30,7 @@ const TripList = (props) => {
 
     return (
         <div className={classes.root}>
-            {trips.trips.map(trip => <TripCard key={trip.id} name={trip.name} destinations={trip.destinations} />)}
+            {trips.trips.map(trip => <TripCard key={trip.id} tripId={trip.id} name={trip.name} destinations={trip.destinations} />)}
             <Button onClick={() => createTrip()} variant="contained" size="small" color="primary">
                 New Trip
             </Button>

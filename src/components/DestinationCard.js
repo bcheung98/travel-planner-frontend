@@ -23,7 +23,7 @@ const useStyles = makeStyles({
         maxWidth: 500,
     },
     media: {
-        height: 650
+        height: 625
     },
 });
 
@@ -77,7 +77,16 @@ const DestinationCard = (props) => {
                             <SelectTrip open={open} onClose={handleClose} />
                         </>
                         :
-                        <Button onClick={() => props.deleteDestination(props.destination)} variant="contained" size="small" color="secondary">Remove Destination</Button>
+                        <Button
+                            onClick={() => {
+                                props.deleteDestination(props.trip, props.destination)
+                                props.onClose()
+                            }}
+                            variant="contained"
+                            size="small"
+                            color="secondary">
+                            Remove From Trip
+                        </Button>
                 }
             </CardActions>
         </Card>
@@ -93,7 +102,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         addDestination: (trip, destination) => dispatch(addDestination(trip, destination)),
-        deleteDestination: (destination) => dispatch(deleteDestination(destination)),
+        deleteDestination: (trip, destination) => dispatch(deleteDestination(trip, destination)),
         createTrip: () => dispatch(createTrip()),
         fetchTrips: () => dispatch(fetchTrips())
     }

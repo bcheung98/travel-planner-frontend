@@ -1,5 +1,7 @@
 import React from "react";
 
+import DestinationCard from "./DestinationCard";
+
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Accordion from '@material-ui/core/Accordion';
@@ -14,6 +16,8 @@ import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,6 +55,19 @@ const useStyles = makeStyles((theme) => ({
 
 const TripCard = (props) => {
     const classes = useStyles();
+
+    const [open, setOpen] = React.useState(false);
+    const [selectedDestination, setSelectedDestination] = React.useState("");
+
+    const handleClickOpen = (destination) => {
+        setOpen(true);
+        setSelectedDestination(destination);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
         <div>
             <div className={classes.root}>
@@ -76,7 +93,11 @@ const TripCard = (props) => {
                                             <ListItemText
                                                 primary={destination.name}
                                                 secondary={`${destination.location}, ${destination.country}`}
+                                                onClick={() => handleClickOpen(destination)}
                                             />
+                                            <Dialog open={open} onClose={handleClose}>
+                                                <DestinationCard destination={selectedDestination} trip={props} onClose={handleClose} />
+                                            </Dialog>
                                         </ListItem>
                                     )
                                 })
@@ -91,9 +112,7 @@ const TripCard = (props) => {
                     </AccordionDetails>
                     <Divider />
                     <AccordionActions>
-                        <Button size="small" color="primary">
-                            Edit Trip
-                        </Button>
+                        {/* Buttons go here! */}
                     </AccordionActions>
                 </Accordion>
             </div>
