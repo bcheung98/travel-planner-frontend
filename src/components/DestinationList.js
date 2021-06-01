@@ -22,7 +22,7 @@ const filterDestinations = (countryFilter, destinations) => {
     if (countryFilter !== "all" && countryFilter !== null) {
         filteredDestinations = destinations.filter(destination => countryFilter === destination.country);
     }
-    return filteredDestinations;
+    return filteredDestinations.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 const DestinationList = (props) => {
@@ -52,7 +52,7 @@ const DestinationList = (props) => {
                     onInputChange={(e, newInputValue) => {
                         setCountryInputValue(newInputValue);
                     }}
-                    options={[... new Set(destinations.destinations.map((destination) => destination.country))]}
+                    options={[... new Set(destinations.destinations.map((destination) => destination.country).sort((a, b) => a.localeCompare(b)))]}
                     getOptionLabel={(option) => option}
                     renderInput={(params) => <TextField {...params} label={"Country"} variant="outlined" />}
                 />
