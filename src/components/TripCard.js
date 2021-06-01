@@ -143,8 +143,8 @@ const TripCard = (props) => {
                             <div className={classes.mapOverlay}>
                                 <MapContainer center={[0, 0]} zoom={2}>
                                     <TileLayer
-                                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+                                        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
                                     />
                                     {props.destinations !== undefined && props.destinations.map(destination => {
                                         return (

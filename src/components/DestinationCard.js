@@ -16,6 +16,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import Dialog from '@material-ui/core/Dialog';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
 const useStyles = makeStyles({
     root: {
@@ -26,13 +29,18 @@ const useStyles = makeStyles({
     media: {
         height: 625
     },
+    mapOverlay: {
+        width: "100vh",
+        height: "95vh"
+    }
 });
 
 const DestinationCard = (props) => {
     const classes = useStyles();
-    let { name, location, country, image, description } = props.destination;
+    let { name, location, country, latitude, longitude, image, description } = props.destination;
 
     const [open, setOpen] = React.useState(false);
+    const [openMap, setOpenMap] = React.useState(false);
 
     useEffect(() => {
         props.fetchTrips();
@@ -51,6 +59,14 @@ const DestinationCard = (props) => {
             props.addDestination(value, props.destination);
         }
     };
+
+    const openMapOverlay = () => {
+        setOpenMap(true);
+    }
+
+    const closeMapOverlay = () => {
+        setOpenMap(false);
+    }
 
     return (
         <Card className={classes.root} variant="outlined">
@@ -87,10 +103,39 @@ const DestinationCard = (props) => {
                             size="small"
                             color="secondary"
                             startIcon={<CloseIcon />}
-                            >
+                        >
                             Remove From Trip
                         </Button>
                 }
+                <Button
+                    onClick={() => openMapOverlay()}
+                    variant="contained"
+                    size="small"
+                    color="primary"
+                    startIcon={<LocationOnIcon />}>
+                    View on Map
+                        </Button>
+                <Dialog open={openMap} onClose={closeMapOverlay}>
+                    <div className={classes.mapOverlay}>
+                        <MapContainer center={[latitude, longitude]} zoom={12}>
+                            <TileLayer
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+                                url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+                            />
+                            <Marker key={props.destination.id} position={[latitude, longitude]}>
+                                <Popup>
+                                    <Typography variant="h5" component="h2">
+                                        {name}
+                                    </Typography>
+                                    <Typography variant="body2" component="p">
+                                        {location}, {country}
+                                    </Typography>
+                                    <img src={image} style={{ width: "100%", height: "100%" }} />
+                                </Popup>
+                            </Marker>
+                        </MapContainer>
+                    </div>
+                </Dialog>
             </CardActions>
         </Card>
     )
