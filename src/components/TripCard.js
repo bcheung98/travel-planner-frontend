@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { deleteTrip } from "../redux/actions/deleteTrip";
 import DestinationCard from "./DestinationCard";
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, StylesProvider } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -12,12 +12,14 @@ import AccordionActions from '@material-ui/core/AccordionActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteIcon from '@material-ui/icons/Delete';
+import MapIcon from '@material-ui/icons/Map';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Dialog from '@material-ui/core/Dialog';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
             cursor: "pointer"
         },
     },
+    mapOverlay: {
+        width: "100vh",
+        height: "95vh"
+    }
 }));
 
 const confirmDelete = () => window.confirm("Are you sure you want to delete this trip and all of its destinations?");
@@ -61,15 +67,24 @@ const TripCard = (props) => {
 
     const [open, setOpen] = React.useState(false);
     const [selectedDestination, setSelectedDestination] = React.useState("");
+    const [openMap, setOpenMap] = React.useState(false);
 
-    const handleClickOpen = (destination) => {
+    const openDestinationCard = (destination) => {
         setOpen(true);
         setSelectedDestination(destination);
     };
 
-    const handleClose = () => {
+    const closeDestinationCard = () => {
         setOpen(false);
     };
+
+    const openMapOverlay = () => {
+        setOpenMap(true);
+    }
+
+    const closeMapOverlay = () => {
+        setOpenMap(false);
+    }
 
     return (
         <div>
@@ -97,10 +112,10 @@ const TripCard = (props) => {
                                                 className={classes.link}
                                                 primary={destination.name}
                                                 secondary={`${destination.location}, ${destination.country}`}
-                                                onClick={() => handleClickOpen(destination)}
+                                                onClick={() => openDestinationCard(destination)}
                                             />
-                                            <Dialog open={open} onClose={handleClose}>
-                                                <DestinationCard destination={selectedDestination} trip={props} onClose={handleClose} />
+                                            <Dialog open={open} onClose={closeDestinationCard}>
+                                                <DestinationCard destination={selectedDestination} trip={props} onClose={closeDestinationCard} />
                                             </Dialog>
                                         </ListItem>
                                     )
@@ -116,6 +131,39 @@ const TripCard = (props) => {
                     </AccordionDetails>
                     <Divider />
                     <AccordionActions>
+                        <Button
+                            onClick={() => openMapOverlay()}
+                            variant="contained"
+                            size="small"
+                            color="primary"
+                            startIcon={<MapIcon />}>
+                            View Trip
+                        </Button>
+                        <Dialog open={openMap} onClose={closeMapOverlay}>
+                            <div className={classes.mapOverlay}>
+                                <MapContainer center={[0, 0]} zoom={2}>
+                                    <TileLayer
+                                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+                                        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+                                    />
+                                    {props.destinations !== undefined && props.destinations.map(destination => {
+                                        return (
+                                            <Marker key={destination.id} position={[destination.latitude, destination.longitude]}>
+                                                <Popup>
+                                                    <Typography variant="h5" component="h2">
+                                                        {destination.name}
+                                                    </Typography>
+                                                    <Typography variant="body2" component="p">
+                                                        {destination.location}, {destination.country}
+                                                    </Typography>
+                                                    <img src={destination.image} style={{ width: "100%", height: "100%" }} />
+                                                </Popup>
+                                            </Marker>
+                                        )
+                                    })}
+                                </MapContainer>
+                            </div>
+                        </Dialog>
                         <Button
                             onClick={() => confirmDelete() && props.deleteTrip(props.tripId)}
                             variant="contained"
