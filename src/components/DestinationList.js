@@ -13,12 +13,9 @@ import DestinationCard from "./DestinationCard";
 const useStyles = makeStyles((theme) => ({
     pagination: {
         margin: 'auto',
-        maxWidth: 550,
+        width: 430,
         marginTop: "20px",
         marginBottom: "20px",
-        '& > * + *': {
-            marginTop: theme.spacing(2),
-        },
     },
     paper: {
         margin: 'auto',
@@ -77,11 +74,11 @@ const DestinationList = (props) => {
                 />
             </div>
             <div className={classes.pagination}>
-                <Pagination count={maxPages} color="primary" page={page} onChange={changePage} />
+                <Pagination count={maxPages} color="secondary" page={page} onChange={changePage} shape="rounded" showFirstButton showLastButton />
             </div>
             {filterDestinations(countryFilter, destinations.destinations).slice((page * 10) - 10, (page * 10) - 1).map(d => <DestinationCard key={d.id} destination={d} />)}
             <div className={classes.pagination}>
-                <Pagination count={maxPages} color="primary" page={page} onChange={changePage} />
+                <Pagination count={maxPages} color="secondary" page={page} onChange={changePage} shape="rounded" showFirstButton showLastButton />
             </div>
         </React.Fragment>
     )
