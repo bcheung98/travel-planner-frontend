@@ -130,7 +130,7 @@ const DestinationCard = (props) => {
                                     <Typography variant="body2" component="p">
                                         {location}, {country}
                                     </Typography>
-                                    <img src={image} style={{ width: "100%", height: "100%" }} />
+                                    <img src={image} style={{ width: "100%", height: "100%" }} alt={name} />
                                 </Popup>
                             </Marker>
                         </MapContainer>
