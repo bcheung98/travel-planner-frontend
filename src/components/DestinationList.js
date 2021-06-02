@@ -26,12 +26,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const filterDestinations = (countryFilter, destinations, page) => {
+const filterDestinations = (countryFilter, destinations) => {
     let filteredDestinations = destinations.sort((a, b) => a.name.localeCompare(b.name));
     if (countryFilter !== "all" && countryFilter !== null) {
         filteredDestinations = destinations.filter(destination => countryFilter === destination.country);
     }
-    filteredDestinations = filteredDestinations.slice((page * 10) - 10, (page * 10) - 1);
     return filteredDestinations;
 }
 
@@ -51,7 +50,7 @@ const DestinationList = (props) => {
     const [countryFilter, setCountryFilter] = React.useState("all");
     const [page, setPage] = React.useState(1);
 
-    const maxPages = Math.ceil(destinations.destinations.length / 10);
+    const maxPages = Math.ceil(filterDestinations(countryFilter, destinations.destinations).length / 10);
 
     const changePage = (e, value) => {
         setPage(value);
@@ -66,6 +65,7 @@ const DestinationList = (props) => {
                     onChange={(e, newValue) => {
                         setCountryValue(newValue);
                         setCountryFilter(newValue);
+                        setPage(1);
                     }}
                     inputValue={countryInputValue}
                     onInputChange={(e, newInputValue) => {
@@ -79,7 +79,7 @@ const DestinationList = (props) => {
             <div className={classes.pagination}>
                 <Pagination count={maxPages} color="primary" page={page} onChange={changePage} />
             </div>
-            {filterDestinations(countryFilter, destinations.destinations, page).map(d => <DestinationCard key={d.id} destination={d} />)}
+            {filterDestinations(countryFilter, destinations.destinations).slice((page * 10) - 10, (page * 10) - 1).map(d => <DestinationCard key={d.id} destination={d} />)}
             <div className={classes.pagination}>
                 <Pagination count={maxPages} color="primary" page={page} onChange={changePage} />
             </div>
