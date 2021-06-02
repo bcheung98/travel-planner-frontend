@@ -7,22 +7,32 @@ import { fetchDestinations } from "../redux/actions/fetchDestinations";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Pagination from '@material-ui/lab/Pagination';
 import DestinationCard from "./DestinationCard";
 
 const useStyles = makeStyles((theme) => ({
-    paper: {
-        padding: theme.spacing(2),
+    pagination: {
         margin: 'auto',
         maxWidth: 550,
+        marginTop: "20px",
+        marginBottom: "20px",
+        '& > * + *': {
+            marginTop: theme.spacing(2),
+        },
+    },
+    paper: {
+        margin: 'auto',
+        maxWidth: 750,
     },
 }));
 
-const filterDestinations = (countryFilter, destinations) => {
-    let filteredDestinations = [...destinations];
+const filterDestinations = (countryFilter, destinations, page) => {
+    let filteredDestinations = destinations.sort((a, b) => a.name.localeCompare(b.name));
     if (countryFilter !== "all" && countryFilter !== null) {
         filteredDestinations = destinations.filter(destination => countryFilter === destination.country);
     }
-    return filteredDestinations.sort((a, b) => a.name.localeCompare(b.name));
+    filteredDestinations = filteredDestinations.slice((page * 10) - 10, (page * 10) - 1);
+    return filteredDestinations;
 }
 
 const DestinationList = (props) => {
@@ -39,9 +49,16 @@ const DestinationList = (props) => {
     const [countryValue, setCountryValue] = React.useState("");
     const [countryInputValue, setCountryInputValue] = React.useState("");
     const [countryFilter, setCountryFilter] = React.useState("all");
+    const [page, setPage] = React.useState(1);
+
+    const maxPages = Math.ceil(destinations.destinations.length / 10);
+
+    const changePage = (e, value) => {
+        setPage(value);
+    }
 
     return (
-        <div>
+        <React.Fragment>
             <div className={classes.paper}>
                 <Autocomplete
                     style={{ margin: "20px" }}
@@ -59,8 +76,14 @@ const DestinationList = (props) => {
                     renderInput={(params) => <TextField {...params} label={"Country"} variant="outlined" />}
                 />
             </div>
-            {filterDestinations(countryFilter, destinations.destinations).map(d => <DestinationCard key={d.id} destination={d} />)}
-        </div>
+            <div className={classes.pagination}>
+                <Pagination count={maxPages} color="primary" page={page} onChange={changePage} />
+            </div>
+            {filterDestinations(countryFilter, destinations.destinations, page).map(d => <DestinationCard key={d.id} destination={d} />)}
+            <div className={classes.pagination}>
+                <Pagination count={maxPages} color="primary" page={page} onChange={changePage} />
+            </div>
+        </React.Fragment>
     )
 }
 
