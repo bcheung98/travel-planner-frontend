@@ -34,7 +34,9 @@ const DestinationList = (props) => {
 
     const classes = useStyles();
 
-    const [countryValue, setCountryValue] = React.useState(destinations.destinations[0]);
+    const countries = [...new Set(destinations.destinations.map((destination) => destination.country).sort((a, b) => a.localeCompare(b)))];
+
+    const [countryValue, setCountryValue] = React.useState(countries[0]);
     const [countryInputValue, setCountryInputValue] = React.useState("");
     const [countryFilter, setCountryFilter] = React.useState("all");
 
@@ -52,12 +54,12 @@ const DestinationList = (props) => {
                     onInputChange={(e, newInputValue) => {
                         setCountryInputValue(newInputValue);
                     }}
-                    options={[... new Set(destinations.destinations.map((destination) => destination.country).sort((a, b) => a.localeCompare(b)))]}
+                    options={countries}
                     getOptionLabel={(option) => option}
                     renderInput={(params) => <TextField {...params} label={"Country"} variant="outlined" />}
                 />
             </div>
-            {filterDestinations(countryFilter, destinations.destinations).map(d => <DestinationCard key={d.id} destination={d}/>)}
+            {filterDestinations(countryFilter, destinations.destinations).map(d => <DestinationCard key={d.id} destination={d} />)}
         </div>
     )
 }
