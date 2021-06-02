@@ -8,6 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Pagination from '@material-ui/lab/Pagination';
+import SearchIcon from '@material-ui/icons/Search';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import DestinationCard from "./DestinationCard";
 
 const useStyles = makeStyles((theme) => ({
@@ -17,16 +19,23 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "20px",
         marginBottom: "20px",
     },
-    paper: {
+    filters: {
         margin: 'auto',
         maxWidth: 750,
     },
+    search: {
+        margin: "auto",
+        maxWidth: 700
+    }
 }));
 
-const filterDestinations = (countryFilter, destinations) => {
+const filterDestinations = (countryFilter, searchValue, destinations) => {
     let filteredDestinations = destinations.sort((a, b) => a.name.localeCompare(b.name));
     if (countryFilter !== "all" && countryFilter !== null) {
-        filteredDestinations = destinations.filter(destination => countryFilter === destination.country);
+        filteredDestinations = filteredDestinations.filter(destination => countryFilter === destination.country);
+    }
+    if (searchValue !== "") {
+        filteredDestinations = filteredDestinations.filter(destination => destination.name.toLowerCase().includes(searchValue.toLowerCase()));
     }
     return filteredDestinations;
 }
@@ -45,9 +54,17 @@ const DestinationList = (props) => {
     const [countryValue, setCountryValue] = React.useState("");
     const [countryInputValue, setCountryInputValue] = React.useState("");
     const [countryFilter, setCountryFilter] = React.useState("all");
+
+    const [searchValue, setSearchValue] = React.useState("");
+
     const [page, setPage] = React.useState(1);
 
-    const maxPages = Math.ceil(filterDestinations(countryFilter, destinations.destinations).length / 10);
+    const handleInputChange = (e) => {
+        setSearchValue(e.target.value);
+        setPage(1);
+    }
+
+    const maxPages = Math.ceil(filterDestinations(countryFilter, searchValue, destinations.destinations).length / 10);
 
     const changePage = (e, value) => {
         setPage(value);
@@ -55,7 +72,7 @@ const DestinationList = (props) => {
 
     return (
         <React.Fragment>
-            <div className={classes.paper}>
+            <div className={classes.filters}>
                 <Autocomplete
                     style={{ margin: "20px" }}
                     value={countryValue}
@@ -73,10 +90,25 @@ const DestinationList = (props) => {
                     renderInput={(params) => <TextField {...params} label={"Country"} variant="outlined" />}
                 />
             </div>
+            <div className={classes.search}>
+                <TextField
+                    onChange={handleInputChange}
+                    placeholder="Search"
+                    variant="outlined"
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <SearchIcon />
+                            </InputAdornment>
+                        )
+                    }}
+                    fullWidth
+                />
+            </div>
             <div className={classes.pagination}>
                 <Pagination count={maxPages} color="secondary" page={page} onChange={changePage} shape="rounded" showFirstButton showLastButton />
             </div>
-            {filterDestinations(countryFilter, destinations.destinations).slice((page * 10) - 10, (page * 10) - 1).map(d => <DestinationCard key={d.id} destination={d} />)}
+            {filterDestinations(countryFilter, searchValue, destinations.destinations).slice((page * 10) - 10, (page * 10) - 1).map(d => <DestinationCard key={d.id} destination={d} />)}
             <div className={classes.pagination}>
                 <Pagination count={maxPages} color="secondary" page={page} onChange={changePage} shape="rounded" showFirstButton showLastButton />
             </div>
