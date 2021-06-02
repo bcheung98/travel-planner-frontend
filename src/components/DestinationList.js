@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
+
 import { withRouter } from "react-router"
 import { connect } from "react-redux";
 import { fetchDestinations } from "../redux/actions/fetchDestinations";
+
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -11,9 +13,7 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(2),
         margin: 'auto',
-        maxWidth: 750,
-        display: "grid",
-        // gridTemplateColumns: "auto auto auto"
+        maxWidth: 550,
     },
 }));
 
@@ -36,7 +36,7 @@ const DestinationList = (props) => {
 
     const countries = [...new Set(destinations.destinations.map((destination) => destination.country).sort((a, b) => a.localeCompare(b)))];
 
-    const [countryValue, setCountryValue] = React.useState(countries[0]);
+    const [countryValue, setCountryValue] = React.useState("");
     const [countryInputValue, setCountryInputValue] = React.useState("");
     const [countryFilter, setCountryFilter] = React.useState("all");
 
