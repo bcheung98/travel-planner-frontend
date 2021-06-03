@@ -26,7 +26,7 @@ const Nav = ({ logged_in, history }) => {
             <AppBar position="static" className="nav-bar">
                 <Toolbar>
                     <Typography variant="h3" className={classes.title} onClick={() => history.push("/")}>
-                        <span style={{ cursor: "pointer" }}>Home</span>
+                        <i style={{ cursor: "pointer" }}>Wanderlust</i>
                     </Typography>
                     {
                         !logged_in && (
