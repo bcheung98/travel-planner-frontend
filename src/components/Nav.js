@@ -14,6 +14,8 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
+        fontStyle: "italic",
+        fontFamily: "Permanent Marker, sans-serif"
     },
 }));
 
@@ -26,7 +28,7 @@ const Nav = ({ logged_in, history }) => {
             <AppBar position="static" className="nav-bar">
                 <Toolbar>
                     <Typography variant="h3" className={classes.title} onClick={() => history.push("/")}>
-                        <i style={{ cursor: "pointer" }}>Wanderlust</i>
+                        <span style={{cursor: "pointer"}}>bon Voyage!</span>
                     </Typography>
                     {
                         !logged_in && (
