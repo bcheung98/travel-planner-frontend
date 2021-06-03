@@ -1,6 +1,7 @@
 import React from "react";
 
 import { connect } from "react-redux";
+import { renameTrip } from "../redux/actions/renameTrip";
 import { deleteTrip } from "../redux/actions/deleteTrip";
 import DestinationCard from "./DestinationCard";
 
@@ -11,6 +12,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionActions from '@material-ui/core/AccordionActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MapIcon from '@material-ui/icons/Map';
 import Button from '@material-ui/core/Button';
@@ -19,6 +21,10 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
 const useStyles = makeStyles((theme) => ({
@@ -54,6 +60,16 @@ const useStyles = makeStyles((theme) => ({
             cursor: "pointer"
         },
     },
+    formOverlay: {
+        width: "300px",
+        height: "150px"
+    },
+    form: {
+        '& > *': {
+            margin: theme.spacing(1),
+            width: '25ch',
+        },
+    },
     mapOverlay: {
         width: "100vh",
         height: "95vh"
@@ -67,6 +83,8 @@ const TripCard = (props) => {
 
     const [open, setOpen] = React.useState(false);
     const [selectedDestination, setSelectedDestination] = React.useState("");
+    const [openForm, setOpenForm] = React.useState(false);
+    const [inputValue, setInputValue] = React.useState(props.name);
     const [openMap, setOpenMap] = React.useState(false);
 
     const openDestinationCard = (destination) => {
@@ -78,12 +96,24 @@ const TripCard = (props) => {
         setOpen(false);
     };
 
+    const openRenameForm = () => {
+        setOpenForm(true);
+    }
+
+    const closeRenameForm = () => {
+        setOpenForm(false);
+    }
+
     const openMapOverlay = () => {
         setOpenMap(true);
     }
 
     const closeMapOverlay = () => {
         setOpenMap(false);
+    }
+
+    const handleInputChange = (e) => {
+        setInputValue(e.target.value);
     }
 
     return (
@@ -136,7 +166,8 @@ const TripCard = (props) => {
                             variant="contained"
                             size="small"
                             color="primary"
-                            startIcon={<MapIcon />}>
+                            startIcon={<MapIcon />}
+                        >
                             View Trip
                         </Button>
                         <Dialog open={openMap} onClose={closeMapOverlay}>
@@ -165,11 +196,46 @@ const TripCard = (props) => {
                             </div>
                         </Dialog>
                         <Button
+                            onClick={() => openRenameForm()}
+                            variant="contained"
+                            size="small"
+                            color="primary"
+                            startIcon={<EditIcon />}
+                        >
+                            Rename Trip
+                        </Button>
+                        <Dialog open={openForm} onClose={closeRenameForm} aria-labelledby="form-dialog-title">
+                            <DialogTitle id="form-dialog-title">Rename Trip</DialogTitle>
+                            <DialogContent>
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    id="name"
+                                    label="Trip Name"
+                                    defaultValue={props.name}
+                                    onChange={handleInputChange}
+                                    fullWidth
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={closeRenameForm} color="secondary">
+                                    Cancel
+                                </Button>
+                                <Button onClick={() => {
+                                    props.renameTrip(props.tripId, inputValue);
+                                    closeRenameForm();
+                                }} color="primary">
+                                    Rename Trip
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                        <Button
                             onClick={() => confirmDelete() && props.deleteTrip(props.tripId)}
                             variant="contained"
                             size="small"
                             color="secondary"
-                            startIcon={<DeleteIcon />}>
+                            startIcon={<DeleteIcon />}
+                        >
                             Delete Trip
                         </Button>
                     </AccordionActions>
@@ -181,6 +247,7 @@ const TripCard = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        renameTrip: (tripId, name) => dispatch(renameTrip(tripId, name)),
         deleteTrip: (tripId) => dispatch(deleteTrip(tripId))
     }
 }
