@@ -53,6 +53,17 @@ const tripReducer = (state = initialState, action) => {
                 trips: newTrips,
                 requesting: false
             }
+        case "START_RENAME_TRIP_REQUEST":
+            return {
+                ...state,
+                requesting: true
+            }
+        case "RENAME_TRIP":
+            state.trips[state.trips.findIndex(trip => trip.id === action.tripId)].name = action.name.name;
+            return {
+                ...state,
+                requesting: false
+            }
         default:
             return state
     }
